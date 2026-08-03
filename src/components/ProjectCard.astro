@@ -36,7 +36,7 @@ const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
       {tags.map((tag) => <li>{tag}</li>)}
     </ul>
     <dl class="project-meta">
-      <div><dt>Contribution:</dt><dd>{role}</dd></div>
+      <div><dt>Keyword:</dt><dd>{role}</dd></div>
       <div>
         <dt class="visually-hidden">{locale === "ja" ? "日付" : "Date"}</dt>
         <dd><time datetime={date.toISOString()}>{displayDate}</time></dd>

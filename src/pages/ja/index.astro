@@ -44,7 +44,7 @@ const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll("-
           <p class="eyebrow">{currentWork.ja.eyebrow}</p>
           <h2 id="current-title">{currentWork.ja.title}</h2>
           <p class="current-summary">{currentWork.ja.description}</p>
-          <p class="contribution"><strong>Contribution:</strong> {currentWork.ja.role}</p>
+          <p class="contribution"><strong>Keyword:</strong> {currentWork.ja.role}</p>
           <div class="current-links">
             <a href={`/ja/work/${currentWork.slug}/`}>プロジェクトを見る <span aria-hidden="true">→</span></a>
             <a href={currentWork.paperUrl}>論文を読む <span aria-hidden="true">↗</span></a>

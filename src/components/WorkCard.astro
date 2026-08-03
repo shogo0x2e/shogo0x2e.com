@@ -45,7 +45,7 @@ const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
     <h2><a href={href}>{title}</a></h2>
     <p>{description}</p>
     <dl class="project-meta">
-      {role && <div><dt>Contribution:</dt><dd>{role}</dd></div>}
+      {role && <div><dt>Keyword:</dt><dd>{role}</dd></div>}
       {showDate && (
         <div>
           <dt class="visually-hidden">{locale === "ja" ? "日付" : "Date"}</dt>

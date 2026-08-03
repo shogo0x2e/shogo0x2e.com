@@ -18,7 +18,7 @@ const hasLinks = work.data.repositoryUrl || work.data.paperUrl || work.data.sour
     {work.data.hero && <img class="detail-hero" src={work.data.hero} alt="" width="1400" height="700" />}
     <div class="detail-grid">
       <aside>
-        <dl class="detail-meta">{work.data.role && <div><dt>Contribution:</dt><dd>{work.data.role}</dd></div>}<div><dt>年</dt><dd>{work.data.year}</dd></div></dl>
+        <dl class="detail-meta">{work.data.role && <div><dt>Keyword:</dt><dd>{work.data.role}</dd></div>}<div><dt>年</dt><dd>{work.data.year}</dd></div></dl>
       </aside>
       <article class="prose">
         {work.data.video && <figure class="detail-video"><video controls playsinline preload="metadata" poster={work.data.hero}><source src={work.data.video} type="video/mp4" />お使いのブラウザは動画再生に対応していません．</video><figcaption>展示記録</figcaption></figure>}
