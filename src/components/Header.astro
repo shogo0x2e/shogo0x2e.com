@@ -29,9 +29,12 @@ const languageHref = locale === "ja"
       type="button"
       aria-expanded="false"
       aria-controls="site-nav"
+      aria-label={locale === "ja" ? "メニューを開く" : "Open menu"}
       data-menu-button
     >
-      {locale === "ja" ? "メニュー" : "Menu"}
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
     </button>
     <nav class="site-nav" id="site-nav" aria-label={locale === "ja" ? "メインナビゲーション" : "Primary navigation"} data-nav>
       {
@@ -54,25 +57,44 @@ const languageHref = locale === "ja"
     </nav>
   </div>
 </header>
+<button class="menu-backdrop" type="button" aria-label={locale === "ja" ? "メニューを閉じる" : "Close menu"} aria-hidden="true" tabindex="-1" data-menu-backdrop></button>
 
 <script>
   const menuButton = document.querySelector<HTMLButtonElement>("[data-menu-button]");
   const nav = document.querySelector<HTMLElement>("[data-nav]");
+  const backdrop = document.querySelector<HTMLButtonElement>("[data-menu-backdrop]");
   const languageSwitch = document.querySelector<HTMLAnchorElement>("[data-locale-target]");
 
   function closeMenu() {
     if (!menuButton || !nav) return;
     menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", document.documentElement.lang === "ja" ? "メニューを開く" : "Open menu");
     nav.dataset.open = "false";
+    backdrop?.setAttribute("data-open", "false");
+    backdrop?.setAttribute("aria-hidden", "true");
+    document.documentElement.classList.remove("menu-open");
   }
 
   if (menuButton && nav) {
     menuButton.addEventListener("click", () => {
       const isOpen = menuButton.getAttribute("aria-expanded") === "true";
       menuButton.setAttribute("aria-expanded", String(!isOpen));
+      menuButton.setAttribute("aria-label", document.documentElement.lang === "ja"
+        ? (!isOpen ? "メニューを閉じる" : "メニューを開く")
+        : (!isOpen ? "Close menu" : "Open menu"));
       nav.dataset.open = String(!isOpen);
+      backdrop?.setAttribute("data-open", String(!isOpen));
+      backdrop?.setAttribute("aria-hidden", String(isOpen));
+      document.documentElement.classList.toggle("menu-open", !isOpen);
     });
     nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+    backdrop?.addEventListener("click", closeMenu);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 800) closeMenu();
+    });
   }
 
   languageSwitch?.addEventListener("click", () => {
