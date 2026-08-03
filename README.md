@@ -44,36 +44,16 @@ private employment, client, or product information behind a `draft` or
 
 The previous static HTML prototype is preserved in `docs/mock/`.
 
-## Publishing
+## Deployment
 
-Production deployments are triggered by stable semantic-version tags. To run
-the checks, create the next tag, and push it with `main`:
+Cloudflare Pages is connected directly to this GitHub repository. A push to
+`main` triggers the production build and deployment.
 
-```bash
-make publish
-```
+- Framework preset: `Astro`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Production branch: `main`
+- Environment variable: `PUBLIC_GA_MEASUREMENT_ID`
 
-The first automatically generated tag is `v1.0.0`; later releases increment
-the patch version. To choose a version explicitly or validate without creating
-a tag:
-
-```bash
-make publish VERSION=1.2.0
-make publish-dry-run
-```
-
-Publishing requires a clean `main` that exactly matches `origin/main`. The tag
-starts `.github/workflows/publish.yml`, which builds the site and uploads
-`dist/` to Cloudflare Pages.
-
-Create the Direct Upload Pages project `shogo0x2e-com` in Cloudflare first, or
-set the GitHub Actions variable `CLOUDFLARE_PAGES_PROJECT` to another project
-name. Configure the `production` GitHub environment with:
-
-- Secret `CLOUDFLARE_API_TOKEN`: a least-privilege token with Account →
-  Cloudflare Pages → Edit
-- Secret `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID
-- Variable `PUBLIC_GA_MEASUREMENT_ID`: the existing GA4 `G-...` measurement ID
-
-Repository and environment secrets remain encrypted in GitHub and are not
-committed to this public repository.
+Use Cloudflare Pages preview deployments for non-production branches. Do not
+commit generated `dist/` files or deployment credentials.
