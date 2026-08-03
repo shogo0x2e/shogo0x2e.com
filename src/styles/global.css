@@ -548,16 +548,14 @@ button:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 
-.writing-list time,
-.writing-list span {
+.writing-list time {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.72rem;
 }
 
 .writing-list div {
-  display: grid;
-  gap: 5px;
+  display: block;
 }
 
 .writing-list a {

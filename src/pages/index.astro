@@ -87,7 +87,6 @@ const formatDate = (date: Date) =>
               <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
               <div>
                 <a href={workHref(entry)}>{entry.data.title}</a>
-                <span>Writing</span>
               </div>
             </li>
           ))}
