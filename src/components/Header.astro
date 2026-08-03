@@ -1,0 +1,86 @@
+---
+interface Props {
+  current?: "about" | "work" | "cv" | "contact";
+  locale?: "en" | "ja";
+  pathname?: string;
+}
+
+const { current, locale = "en", pathname = "/" } = Astro.props;
+const prefix = locale === "ja" ? "/ja" : "";
+const items = [
+  { id: "about", en: "About", ja: "About", path: "/" },
+  { id: "work", en: "Work", ja: "Work", path: "/work/" },
+  { id: "cv", en: "CV", ja: "CV", path: "/cv/" },
+  { id: "contact", en: "Contact", ja: "Contact", path: "/contact/" },
+] as const;
+const languageHref = locale === "ja"
+  ? pathname.replace(/^\/ja(?=\/|$)/, "") || "/"
+  : `/ja${pathname === "/" ? "/" : pathname}`;
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="wordmark" href={`${prefix}/`} aria-label="shogo0x2e home">
+      <img src="/favicon.png" alt="" width="32" height="32" />
+      <span>shogo0x2e</span>
+    </a>
+    <button
+      class="menu-button"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-menu-button
+    >
+      {locale === "ja" ? "メニュー" : "Menu"}
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label={locale === "ja" ? "メインナビゲーション" : "Primary navigation"} data-nav>
+      {
+        items.map((item) => (
+          <a href={`${prefix}${item.path}`} aria-current={current === item.id ? "page" : undefined}>
+            {item[locale]}
+          </a>
+        ))
+      }
+      <a
+        class="language-switch"
+        href={languageHref}
+        hreflang={locale === "ja" ? "en" : "ja"}
+        data-locale-target={locale === "ja" ? "en" : "ja"}
+      >
+        <span class:list={{ active: locale === "en" }}>EN</span>
+        <span aria-hidden="true">/</span>
+        <span class:list={{ active: locale === "ja" }}>JA</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>("[data-menu-button]");
+  const nav = document.querySelector<HTMLElement>("[data-nav]");
+  const languageSwitch = document.querySelector<HTMLAnchorElement>("[data-locale-target]");
+
+  function closeMenu() {
+    if (!menuButton || !nav) return;
+    menuButton.setAttribute("aria-expanded", "false");
+    nav.dataset.open = "false";
+  }
+
+  if (menuButton && nav) {
+    menuButton.addEventListener("click", () => {
+      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+      nav.dataset.open = String(!isOpen);
+    });
+    nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+  }
+
+  languageSwitch?.addEventListener("click", () => {
+    const target = languageSwitch.dataset.localeTarget;
+    if (target !== "en" && target !== "ja") return;
+
+    try {
+      localStorage.setItem("shogo0x2e-locale", target);
+    } catch {}
+  });
+</script>

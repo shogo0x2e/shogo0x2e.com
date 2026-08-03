@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type WorkEntry = CollectionEntry<"projects"> | CollectionEntry<"writing">;
+
+interface Props {
+  work: WorkEntry;
+  locale?: "en" | "ja";
+  showType?: boolean;
+  showDate?: boolean;
+}
+
+const { work, locale = "en", showType = true, showDate = true } = Astro.props;
+const { title, description, date, tags, keywords } = work.data;
+const prefix = locale === "ja" ? "/ja" : "";
+const isProjectEntry = work.collection === "projects";
+const hero = isProjectEntry ? work.data.hero : undefined;
+const role = isProjectEntry ? work.data.role : undefined;
+const href = isProjectEntry
+  ? `${prefix}/work/${work.data.slug}/`
+  : work.data.externalUrl ?? `${prefix}/work/${work.data.slug}/`;
+const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
+---
+
+<article
+  class:list={["archive-card", { "archive-card-text": !hero }]}
+  id={work.data.slug}
+  data-work-card
+  data-type={tags[0].toLowerCase()}
+  data-search={[title, description, ...keywords].join(" ")}
+>
+  {hero ? (
+    <a class="project-image-link" href={href} aria-label={locale === "ja" ? `${title}を見る` : `View ${title}`}>
+      <img src={hero} alt="" width="720" height="360" />
+    </a>
+  ) : (
+    <div class="work-card-placeholder" aria-hidden="true"><span>{tags[0]}</span></div>
+  )}
+  <div class="archive-card-body">
+    {showType && (
+      <ul class="tag-list" aria-label={locale === "ja" ? "分類" : "Type"}>
+        <li>{tags[0]}</li>
+      </ul>
+    )}
+    <h2><a href={href}>{title}</a></h2>
+    <p>{description}</p>
+    <dl class="project-meta">
+      {role && <div><dt>Contribution:</dt><dd>{role}</dd></div>}
+      {showDate && (
+        <div>
+          <dt class="visually-hidden">{locale === "ja" ? "日付" : "Date"}</dt>
+          <dd><time datetime={date.toISOString()}>{displayDate}</time></dd>
+        </div>
+      )}
+    </dl>
+  </div>
+</article>

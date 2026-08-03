@@ -1,0 +1,19 @@
+---
+interface Props {
+  compact?: boolean;
+  locale?: "en" | "ja";
+}
+const { compact = false, locale = "en" } = Astro.props;
+---
+
+<footer class="site-footer shell">
+  <p>© 2026 Shogo Kitada</p>
+  <p><time datetime="2026-08-03T02:41:00Z">Last updated 2026-08-03T02:41Z</time></p>
+  {
+    !compact && (
+      <nav aria-label={locale === "ja" ? "外部リンク" : "Social links"}>
+        <a href="mailto:contact@shogo0x2e.com">contact@shogo0x2e.com</a>
+      </nav>
+    )
+  }
+</footer>

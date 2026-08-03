@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Projects by Shogo Kitada across software, research, and interactive systems." />
+    <title>Projects — shogo0x2e</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="wordmark" href="./index.html" aria-label="shogo0x2e home">shogo0x2e</a>
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-button>Menu</button>
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
+          <a href="./index.html">About</a>
+          <a href="./projects.html" aria-current="page">Projects</a>
+          <a href="./cv.html">CV</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="archive shell" id="main">
+      <header class="page-intro">
+        <h1>Projects</h1>
+        <p>Software, research, interactive systems, and experiments.</p>
+      </header>
+
+      <section class="archive-controls" aria-label="Project search and filters">
+        <label class="search-field">
+          <span class="visually-hidden">Search projects</span>
+          <input type="search" placeholder="Search projects" autocomplete="off" data-project-search />
+        </label>
+        <div class="filter-row">
+          <div class="filter-list" aria-label="Filter projects by category">
+            <button type="button" aria-pressed="true" data-filter="all">All</button>
+            <button type="button" aria-pressed="false" data-filter="software">Software</button>
+            <button type="button" aria-pressed="false" data-filter="research">Research</button>
+            <button type="button" aria-pressed="false" data-filter="interactive-systems">Interactive Systems</button>
+            <button type="button" aria-pressed="false" data-filter="unity">Unity</button>
+          </div>
+          <p class="result-count" aria-live="polite" data-result-count>4 projects</p>
+        </div>
+      </section>
+
+      <section class="archive-grid" aria-label="Project results" data-project-grid>
+        <article class="archive-card" id="morphcubes" data-project-card data-tags="research interactive-systems unity robotics telepresence" data-title="MorphCubes">
+          <img src="./assets/morphcubes-01.png" alt="Modular robots arranged in an experimental space" width="288" height="180" />
+          <div class="archive-card-body">
+            <h2>MorphCubes</h2>
+            <p>Exploring how projected bodies and modular robots can create physical presence in remote communication.</p>
+            <ul class="tag-list" aria-label="MorphCubes categories"><li>Research</li><li>Unity</li><li>Robotics</li></ul>
+            <dl class="project-meta"><div><dt>Role</dt><dd>System development, experiment design</dd></div><div><dt>Year</dt><dd>2026</dd></div></dl>
+          </div>
+        </article>
+
+        <article class="archive-card" id="unity-library" data-project-card data-tags="software interactive-systems unity tooling" data-title="Unity as a Library">
+          <img src="./assets/unity-library.png" alt="Unity editor showing a technical project" width="302" height="116" />
+          <div class="archive-card-body">
+            <h2>Unity as a Library</h2>
+            <p>Embedding Unity as a runtime library in native applications and designing a maintainable build workflow.</p>
+            <ul class="tag-list" aria-label="Unity as a Library categories"><li>Unity</li><li>C#</li><li>Tooling</li></ul>
+            <dl class="project-meta"><div><dt>Role</dt><dd>Design, implementation</dd></div><div><dt>Year</dt><dd>2025</dd></div></dl>
+          </div>
+        </article>
+
+        <article class="archive-card" id="skilldb" data-project-card data-tags="software web nextjs postgresql typescript" data-title="SkillDB">
+          <img src="./assets/skilldb.png" alt="A web application interface for managing skills" width="285" height="116" />
+          <div class="archive-card-body">
+            <h2>SkillDB</h2>
+            <p>A skill-based talent management product rebuilt from a no-code prototype to a production web application.</p>
+            <ul class="tag-list" aria-label="SkillDB categories"><li>Next.js</li><li>PostgreSQL</li><li>TypeScript</li></ul>
+            <dl class="project-meta"><div><dt>Role</dt><dd>Full-stack engineer</dd></div><div><dt>Year</dt><dd>2024</dd></div></dl>
+          </div>
+        </article>
+
+        <article class="archive-card" id="blackhole-boogie" data-project-card data-tags="interactive-systems unity vr international audiovisual" data-title="BlackHoleBoogie">
+          <img src="./assets/blackhole-boogie.png" alt="An audiovisual VR performance projected on a large display" width="302" height="116" />
+          <div class="archive-card-body">
+            <h2>BlackHoleBoogie</h2>
+            <p>A VR experience built in Sweden by a multinational team exploring movement, gravity, and rhythm.</p>
+            <ul class="tag-list" aria-label="BlackHoleBoogie categories"><li>Unity</li><li>VR</li><li>Multinational team</li></ul>
+            <dl class="project-meta"><div><dt>Role</dt><dd>Team lead, developer</dd></div><div><dt>Year</dt><dd>2024</dd></div></dl>
+          </div>
+        </article>
+      </section>
+
+      <p class="empty-state" hidden data-empty-state>No projects match this search.</p>
+    </main>
+
+    <footer class="site-footer shell">
+      <p>© 2026 Shogo Kitada</p><p>Last updated 2026.07</p>
+      <nav aria-label="Social links"><a href="https://github.com/shogo0x2e">GitHub</a><a href="https://zenn.dev/shogo0x2e">Zenn</a><a href="mailto:contact@shogo0x2e.com">Email</a></nav>
+    </footer>
+  </body>
+</html>

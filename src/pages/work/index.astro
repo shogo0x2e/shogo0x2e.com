@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import WorkCard from "../../components/WorkCard.astro";
+
+const locale = "en" as const;
+const projects = await getCollection("projects", ({ data }) => !data.draft && data.locale === locale);
+const writing = await getCollection("writing", ({ data }) => !data.draft && data.locale === locale);
+const work = [...projects, ...writing].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const filters = ["All", "Project", "Writing"];
+---
+
+<BaseLayout title="Work — shogo0x2e" description="Projects and writing by Shogo Kitada." current="work">
+  <main class="archive shell" id="main">
+    <header class="page-intro">
+      <h1>Work</h1>
+      <p>Projects and writing across software, research, and interactive systems.</p>
+    </header>
+    <section class="archive-controls" aria-label="Work search and filters">
+      <label class="search-field">
+        <span class="visually-hidden">Search work</span>
+        <input type="search" placeholder="Search work" autocomplete="off" data-work-search />
+      </label>
+      <div class="filter-row">
+        <div class="filter-list" aria-label="Filter work by type">
+          {filters.map((filter) => (
+            <button type="button" aria-pressed={filter === "All" ? "true" : "false"} data-filter={filter.toLowerCase()}>{filter}</button>
+          ))}
+        </div>
+        <p class="result-count" aria-live="polite" data-result-count>{work.length} items</p>
+      </div>
+    </section>
+    <section class="archive-grid" aria-label="Work results" data-work-grid>
+      {work.map((entry) => <WorkCard work={entry} locale={locale} />)}
+    </section>
+    <p class="empty-state" hidden data-empty-state>No work matches this search.</p>
+  </main>
+</BaseLayout>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>("[data-work-search]");
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-filter]")];
+  const cards = [...document.querySelectorAll<HTMLElement>("[data-work-card]")];
+  const count = document.querySelector<HTMLElement>("[data-result-count]");
+  const empty = document.querySelector<HTMLElement>("[data-empty-state]");
+  const params = new URLSearchParams(window.location.search);
+  let activeFilter = ["project", "writing"].includes(params.get("type") ?? "") ? params.get("type")! : "all";
+  if (search) search.value = params.get("q") ?? "";
+
+  const normalize = (value: string) => value.trim().toLocaleLowerCase();
+  function updateUrl() {
+    const next = new URLSearchParams(window.location.search);
+    const query = search?.value.trim() ?? "";
+    query ? next.set("q", query) : next.delete("q");
+    activeFilter === "all" ? next.delete("type") : next.set("type", activeFilter);
+    const suffix = next.toString();
+    history.replaceState(null, "", `${window.location.pathname}${suffix ? `?${suffix}` : ""}`);
+  }
+  function updateResults(syncUrl = true) {
+    const query = normalize(search?.value ?? "");
+    let visible = 0;
+    cards.forEach((card) => {
+      const matchesType = activeFilter === "all" || card.dataset.type === activeFilter;
+      const matchesQuery = !query || normalize(card.dataset.search ?? "").includes(query);
+      card.hidden = !(matchesType && matchesQuery);
+      if (!card.hidden) visible += 1;
+    });
+    buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter)));
+    if (count) count.textContent = `${visible} ${visible === 1 ? "item" : "items"}`;
+    if (empty) empty.hidden = visible !== 0;
+    if (syncUrl) updateUrl();
+  }
+  search?.addEventListener("input", () => updateResults());
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter ?? "all";
+    updateResults();
+  }));
+  updateResults(false);
+</script>

@@ -1,0 +1,98 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: "about" | "work" | "cv" | "contact";
+  bodyClass?: string;
+  compactFooter?: boolean;
+  locale?: "en" | "ja";
+}
+
+const {
+  title = "shogo0x2e — Shogo Kitada",
+  description = "Shogo Kitada's personal technical portfolio.",
+  current,
+  bodyClass,
+  compactFooter = false,
+  locale = "en",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const englishPath = locale === "ja"
+  ? Astro.url.pathname.replace(/^\/ja(?=\/|$)/, "") || "/"
+  : Astro.url.pathname;
+const japanesePath = locale === "ja"
+  ? Astro.url.pathname
+  : `/ja${Astro.url.pathname === "/" ? "/" : Astro.url.pathname}`;
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const analyticsEnabled = import.meta.env.PROD && /^G-[A-Z0-9]+$/.test(gaMeasurementId ?? "");
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={new URL(englishPath, Astro.site)} />
+    <link rel="alternate" hreflang="ja" href={new URL(japanesePath, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(englishPath, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <title>{title}</title>
+    {
+      analyticsEnabled && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
+          <script is:inline define:vars={{ gaMeasurementId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag("js", new Date());
+            gtag("config", gaMeasurementId);
+          </script>
+        </>
+      )
+    }
+    {
+      Astro.url.pathname === "/" && (
+        <script is:inline>
+          {`(() => {
+            const storageKey = "shogo0x2e-locale";
+            let preferredLocale = null;
+
+            try {
+              preferredLocale = localStorage.getItem(storageKey);
+            } catch {}
+
+            const browserLocale = (
+              navigator.languages?.[0] || navigator.language || ""
+            ).toLowerCase();
+            const locale = preferredLocale === "en" || preferredLocale === "ja"
+              ? preferredLocale
+              : browserLocale.startsWith("ja") ? "ja" : "en";
+
+            if (locale === "ja") {
+              location.replace("/ja/" + location.search + location.hash);
+            }
+          })();`}
+        </script>
+      )
+    }
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">{locale === "ja" ? "本文へ移動" : "Skip to content"}</a>
+    <Header current={current} locale={locale} pathname={Astro.url.pathname} />
+    <slot />
+    <Footer compact={compactFooter} locale={locale} />
+  </body>
+</html>

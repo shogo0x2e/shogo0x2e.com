@@ -1,0 +1,92 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import WorkCard from "../../components/WorkCard.astro";
+import SocialLinks from "../../components/SocialLinks.astro";
+import { currentWork } from "../../data/currentWork";
+
+const locale = "ja" as const;
+const projectEntries = (await getCollection("projects", ({ data }) => !data.draft && data.locale === locale))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const projects = projectEntries.filter(({ data }) => data.tags[0] === "Project");
+const writingEntries = await getCollection("writing", ({ data }) => !data.draft && data.locale === locale);
+const writing = [...projectEntries.filter(({ data }) => data.tags[0] === "Writing"), ...writingEntries]
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
+const workHref = (entry: (typeof writing)[number]) => entry.collection === "writing" && entry.data.externalUrl
+  ? entry.data.externalUrl
+  : `/ja/work/${entry.data.slug}/`;
+const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll("-", ".");
+---
+
+<BaseLayout
+  locale={locale}
+  current="about"
+  title="shogo0x2e — 北田 章伍"
+  description="北田章伍の技術ポートフォリオ．"
+>
+  <main id="main">
+    <section class="hero shell section-anchor" id="now" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">Shogo Kitada<span class="hero-name-ja" lang="ja">北田 章伍</span></h1>
+        <p class="hero-lede">Software, research, and interactive systems.<br />Based in Japan.</p>
+        <div class="identity" aria-label="プロフィール概要">
+          <p>shogo0x2e / きたぴー</p>
+        </div>
+        <SocialLinks locale={locale} />
+      </div>
+      <figure class="hero-figure">
+        <img src="/images/hero-google-japan.webp" alt="Google Japanで撮影した北田章伍" width="1200" height="1200" />
+      </figure>
+    </section>
+
+      <section class="current-work shell section-anchor" aria-labelledby="current-title">
+        <div class="current-copy">
+          <p class="eyebrow">{currentWork.ja.eyebrow}</p>
+          <h2 id="current-title">{currentWork.ja.title}</h2>
+          <p class="current-summary">{currentWork.ja.description}</p>
+          <p class="contribution"><strong>Contribution:</strong> {currentWork.ja.role}</p>
+          <div class="current-links">
+            <a href={`/ja/work/${currentWork.slug}/`}>プロジェクトを見る <span aria-hidden="true">→</span></a>
+            <a href={currentWork.paperUrl}>論文を読む <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="current-gallery" aria-label="Robotic Telepresenceのプロジェクト画像">
+          <img src={currentWork.images[0]} alt="モジュラーロボットへ投影された遠隔話者と対面する実験参加者" width="288" height="180" />
+          <img src={currentWork.images[1]} alt="遠隔話者の身体を表現する二つの投影配置の比較" width="308" height="180" />
+          <img src={currentWork.images[2]} alt="ロボット，カメラ，プロジェクター，反射床からなるRobotic Telepresenceのシステム構成" width="290" height="180" />
+        </div>
+      </section>
+
+    <div class="content-grid shell">
+      <section class="project-list" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <h2 id="projects-title">Projects</h2>
+          <a href="/ja/work/?type=project">すべて見る <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="project-grid">
+          {projects.filter(({ data }) => data.slug !== currentWork.slug).slice(0, 3).map((project) => (
+            <WorkCard work={project} locale={locale} showType={false} showDate={false} />
+          ))}
+        </div>
+      </section>
+
+      <section class="writing section-anchor" aria-labelledby="writing-title">
+        <div class="section-heading">
+          <h2 id="writing-title">Writing</h2>
+          <a href="/ja/work/?type=writing">すべて見る <span aria-hidden="true">→</span></a>
+        </div>
+        <ol class="writing-list">
+          {writing.map((entry) => (
+            <li>
+              <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+              <div>
+                <a href={workHref(entry)}>{entry.data.title}</a>
+                <span>Writing</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

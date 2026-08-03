@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A static HTML mock for Shogo Kitada's personal technical portfolio."
+    />
+    <title>shogo0x2e — Shogo Kitada</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="shell header-inner">
+        <a class="wordmark" href="./index.html" aria-label="shogo0x2e home">shogo0x2e</a>
+
+        <button
+          class="menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          data-menu-button
+        >
+          <span>Menu</span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
+          <a href="./index.html" aria-current="page">About</a>
+          <a href="./projects.html">Projects</a>
+          <a href="./cv.html">CV</a>
+          <a href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero shell section-anchor" id="now" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">I explore what<br />I don’t yet know exists.</h1>
+          <p class="hero-lede">
+            Engineer and researcher building across software, interactive systems,
+            and unfamiliar domains.
+          </p>
+
+          <div class="identity" aria-label="Profile summary">
+            <p>Shogo Kitada</p>
+            <p>Tokyo, Japan</p>
+            <p>Currently exploring interactive systems, software, and unfamiliar domains.</p>
+          </div>
+        </div>
+
+        <figure class="hero-figure">
+          <img
+            src="./assets/hero-lab.png"
+            alt="A researcher working with a laptop and interactive hardware in a laboratory"
+            width="696"
+            height="310"
+          />
+          <figcaption>Lab work in progress · Last updated 2026.07</figcaption>
+        </figure>
+      </section>
+
+      <section class="current-work shell section-anchor" id="projects" aria-labelledby="current-title">
+        <div class="current-copy">
+          <p class="eyebrow">Current work</p>
+          <h2 id="current-title">MorphCubes</h2>
+          <p class="current-summary">
+            Exploring how projected bodies and modular robots can create physical
+            presence in remote communication.
+          </p>
+
+          <ul class="tag-list tag-list-inverse" aria-label="MorphCubes technologies">
+            <li>Research</li>
+            <li>Unity</li>
+            <li>Robotics</li>
+          </ul>
+
+          <p class="contribution">
+            <strong>My role</strong> — System development, experiment design, paper writing
+          </p>
+
+          <div class="current-links">
+            <a href="./projects.html#morphcubes">View project <span aria-hidden="true">→</span></a>
+            <a href="https://ipsj.ixsq.nii.ac.jp/records/2007519">
+              Read paper <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="current-gallery" aria-label="MorphCubes project images">
+          <img
+            src="./assets/morphcubes-01.png"
+            alt="Modular robots arranged in an experimental space"
+            width="288"
+            height="180"
+          />
+          <img
+            src="./assets/morphcubes-02.png"
+            alt="Projection mapped modular robots representing a body"
+            width="308"
+            height="180"
+          />
+          <img
+            src="./assets/morphcubes-03.png"
+            alt="Operator controlling a projection and robot experiment"
+            width="290"
+            height="180"
+          />
+        </div>
+      </section>
+
+      <div class="content-grid shell">
+        <section class="project-list" id="project-list" aria-labelledby="projects-title">
+          <div class="section-heading">
+            <h2 id="projects-title">Selected projects</h2>
+            <a href="./projects.html">View all projects <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="project-grid">
+            <article class="project-card" id="unity-library">
+              <img
+                src="./assets/unity-library.png"
+                alt="Unity editor showing a technical project"
+                width="302"
+                height="116"
+              />
+              <div class="project-body">
+                <h3><a href="./projects.html#unity-library">Unity as a Library</a></h3>
+                <ul class="tag-list" aria-label="Unity as a Library technologies">
+                  <li>Unity</li>
+                  <li>C#</li>
+                  <li>Tooling</li>
+                </ul>
+                <p>
+                  Embedding Unity as a runtime library in native applications and
+                  designing a maintainable build workflow.
+                </p>
+                <dl class="project-meta">
+                  <div><dt>Role</dt><dd>Design, implementation</dd></div>
+                  <div><dt>Year</dt><dd>2025</dd></div>
+                </dl>
+              </div>
+            </article>
+
+            <article class="project-card" id="skilldb">
+              <img
+                src="./assets/skilldb.png"
+                alt="A web application interface for managing skills"
+                width="285"
+                height="116"
+              />
+              <div class="project-body">
+                <h3><a href="./projects.html#skilldb">SkillDB</a></h3>
+                <ul class="tag-list" aria-label="SkillDB technologies">
+                  <li>Next.js</li>
+                  <li>PostgreSQL</li>
+                  <li>TypeScript</li>
+                </ul>
+                <p>
+                  A skill-based talent management product rebuilt from Bubble to a
+                  production Next.js application.
+                </p>
+                <dl class="project-meta">
+                  <div><dt>Role</dt><dd>Full-stack engineer</dd></div>
+                  <div><dt>Year</dt><dd>2024</dd></div>
+                </dl>
+              </div>
+            </article>
+
+            <article class="project-card" id="blackhole-boogie">
+              <img
+                src="./assets/blackhole-boogie.png"
+                alt="An audiovisual VR performance projected on a large display"
+                width="302"
+                height="116"
+              />
+              <div class="project-body">
+                <h3><a href="./projects.html#blackhole-boogie">BlackHoleBoogie</a></h3>
+                <ul class="tag-list" aria-label="BlackHoleBoogie technologies">
+                  <li>Unity</li>
+                  <li>VR</li>
+                  <li>Multinational team</li>
+                </ul>
+                <p>
+                  A VR experience built in Sweden by a multinational team exploring
+                  movement, gravity, and rhythm.
+                </p>
+                <dl class="project-meta">
+                  <div><dt>Role</dt><dd>Team lead, developer</dd></div>
+                  <div><dt>Year</dt><dd>2024</dd></div>
+                </dl>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="writing section-anchor" id="writing" aria-labelledby="writing-title">
+          <div class="section-heading">
+            <h2 id="writing-title">Latest writing</h2>
+            <a href="https://zenn.dev/shogo0x2e">View all writing <span aria-hidden="true">→</span></a>
+          </div>
+
+          <ol class="writing-list">
+            <li>
+              <time datetime="2025-12-14">2025.12.14</time>
+              <div>
+                <a href="https://zenn.dev/livetoon/articles/expo-uaal-prep">
+                  Unity as a Library with Expo Modules
+                </a>
+                <span>12 min read</span>
+              </div>
+            </li>
+            <li>
+              <time datetime="2024-10-28">2024.10.28</time>
+              <div>
+                <a href="https://zenn.dev/shogo0x2e/articles/770146f4f89ae2">
+                  Next.js Conf 2024 — notes from every session
+                </a>
+                <span>10 min read</span>
+              </div>
+            </li>
+            <li>
+              <time datetime="2026-03-02">2026.03.02</time>
+              <div>
+                <a href="https://ipsj.ixsq.nii.ac.jp/records/2007519">
+                  Evaluating embodied telepresence with modular robots
+                </a>
+                <span>Research paper</span>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </div>
+
+    </main>
+
+    <footer class="site-footer shell">
+      <p>© 2026 Shogo Kitada</p>
+      <p>Last updated 2026.07</p>
+      <nav aria-label="Social links">
+        <a href="https://github.com/shogo0x2e">GitHub</a>
+        <a href="https://zenn.dev/shogo0x2e">Zenn</a>
+        <a href="mailto:contact@shogo0x2e.com">Email</a>
+      </nav>
+    </footer>
+  </body>
+</html>

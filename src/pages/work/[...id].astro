@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", ({ data }) => !data.draft && data.locale === "en");
+  return projects.map((work) => ({ params: { id: work.data.slug }, props: { work } }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+const hasLinks = work.data.repositoryUrl || work.data.paperUrl || work.data.sourceUrl;
+---
+
+<BaseLayout title={`${work.data.title} — shogo0x2e`} description={work.data.description} current="work">
+  <main class="detail-page shell" id="main">
+    <a class="back-link" href="/work/">← All work</a>
+    <header class="detail-header">
+      <p class="eyebrow">{work.data.date.toISOString().slice(0, 7).replace("-", ".")} · {work.data.tags[0]}</p>
+      <h1>{work.data.title}</h1><p>{work.data.description}</p>
+    </header>
+    {work.data.hero && <img class="detail-hero" src={work.data.hero} alt="" width="1400" height="700" />}
+    <div class="detail-grid">
+      <aside>
+        <dl class="detail-meta">{work.data.role && <div><dt>Contribution:</dt><dd>{work.data.role}</dd></div>}<div><dt>Year</dt><dd>{work.data.year}</dd></div></dl>
+      </aside>
+      <article class="prose">
+        {work.data.video && <figure class="detail-video"><video controls playsinline preload="metadata" poster={work.data.hero}><source src={work.data.video} type="video/mp4" />Your browser does not support embedded video.</video><figcaption>Project documentation</figcaption></figure>}
+        {work.data.youtubeId && <figure class="detail-video"><iframe src={`https://www.youtube-nocookie.com/embed/${work.data.youtubeId}`} title={`${work.data.title} video`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><figcaption>Project video</figcaption></figure>}
+        <Content />
+        {hasLinks && (
+          <section class="project-resource-links">
+            <h2>Links</h2>
+            <ul>
+              {work.data.repositoryUrl && <li><a href={work.data.repositoryUrl}>GitHub repository ↗</a></li>}
+              {work.data.paperUrl && <li><a href={work.data.paperUrl}>Read paper ↗</a></li>}
+              {work.data.sourceUrl && <li><a href={work.data.sourceUrl}>Project material ↗</a></li>}
+            </ul>
+          </section>
+        )}
+      </article>
+    </div>
+  </main>
+</BaseLayout>

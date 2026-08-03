@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  archive?: boolean;
+  locale?: "en" | "ja";
+}
+
+const { project, archive = false, locale = "en" } = Astro.props;
+const { title, description, hero, tags, role, date } = project.data;
+const tagIndex = tags.map((tag) => tag.toLowerCase().replaceAll(" ", "-")).join(" ");
+const prefix = locale === "ja" ? "/ja" : "";
+const projectHref = `${prefix}/work/${project.data.slug}/`;
+const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
+---
+
+<article
+  class={archive ? "archive-card" : "project-card"}
+  id={project.data.slug}
+  data-project-card={archive ? "" : undefined}
+  data-title={archive ? title : undefined}
+  data-tags={archive ? tagIndex : undefined}
+>
+  {hero && (
+    <a class="project-image-link" href={projectHref} aria-label={locale === "ja" ? `${title}を見る` : `View ${title}`}>
+      <img src={hero} alt="" width="720" height="360" />
+    </a>
+  )}
+  <div class={archive ? "archive-card-body" : "project-body"}>
+    <h2 class:list={{ "project-card-title": !archive }}>
+      <a href={projectHref}>{title}</a>
+    </h2>
+    <p>{description}</p>
+    <ul class="tag-list" aria-label={`${title} categories`}>
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <dl class="project-meta">
+      <div><dt>Contribution:</dt><dd>{role}</dd></div>
+      <div>
+        <dt class="visually-hidden">{locale === "ja" ? "日付" : "Date"}</dt>
+        <dd><time datetime={date.toISOString()}>{displayDate}</time></dd>
+      </div>
+    </dl>
+  </div>
+</article>
