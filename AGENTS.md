@@ -20,9 +20,9 @@ Before making changes:
 
 ```bash
 npm install
-npm run dev
-npm run build
-npm run preview
+make dev
+make build
+make preview
 ```
 
 The development server normally runs at `http://127.0.0.1:4321`.
@@ -99,6 +99,9 @@ and must not be committed.
 - The site is intended for Cloudflare Pages as a static Astro build.
 - Build command: `npm run build`
 - Output directory: `dist`
+- Production publishing is triggered only by stable `vX.Y.Z` tags.
+- `make publish` validates and builds the site, creates the next release tag,
+  and pushes it with `main`. Use `make publish-dry-run` when testing the flow.
 - Google Analytics is enabled only in production when
   `PUBLIC_GA_MEASUREMENT_ID` contains a valid `G-...` value.
 - Never hard-code deployment-specific environment values into source files.
