@@ -76,27 +76,31 @@ const analyticsEnabled = import.meta.env.PROD && /^G-[A-Z0-9]+$/.test(gaMeasurem
     }
     {
       Astro.url.pathname === "/" && (
-        <script is:inline>
-          {`(() => {
+        <script
+          is:inline
+          set:html={`(() => {
             const storageKey = "shogo0x2e-locale";
             let preferredLocale = null;
 
             try {
-              preferredLocale = localStorage.getItem(storageKey);
+              preferredLocale = sessionStorage.getItem(storageKey);
             } catch {}
 
-            const browserLocale = (
-              navigator.languages?.[0] || navigator.language || ""
-            ).toLowerCase();
+            const browserLocales = navigator.languages?.length
+              ? navigator.languages
+              : [navigator.language];
+            const browserLocale = browserLocales
+              .map((value) => value.toLowerCase().split("-")[0])
+              .find((value) => value === "ja" || value === "en") || "en";
             const locale = preferredLocale === "en" || preferredLocale === "ja"
               ? preferredLocale
-              : browserLocale.startsWith("ja") ? "ja" : "en";
+              : browserLocale;
 
             if (locale === "ja") {
               location.replace("/ja/" + location.search + location.hash);
             }
           })();`}
-        </script>
+        />
       )
     }
   </head>

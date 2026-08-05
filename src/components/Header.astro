@@ -102,7 +102,7 @@ const languageHref = locale === "ja"
     if (target !== "en" && target !== "ja") return;
 
     try {
-      localStorage.setItem("shogo0x2e-locale", target);
+      sessionStorage.setItem("shogo0x2e-locale", target);
     } catch {}
   });
 </script>

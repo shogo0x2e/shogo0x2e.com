@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:locale": "npm run build && node scripts/check-locale-redirect.mjs"
   },
   "dependencies": {
     "astro": "^7.0.0"
