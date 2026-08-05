@@ -47,13 +47,19 @@ The previous static HTML prototype is preserved in `docs/mock/`.
 ## Deployment
 
 Cloudflare Pages is connected directly to this GitHub repository. A push to
-`main` triggers the production build and deployment.
+`production` triggers the production build and deployment.
 
 - Framework preset: `Astro`
 - Build command: `npm run build`
 - Build output directory: `dist`
-- Production branch: `main`
+- Production branch: `production`
 - Environment variable: `PUBLIC_GA_MEASUREMENT_ID`
+
+Before development and production builds, `scripts/generate-build-metadata.mjs`
+generates the footer's `Last updated` value. Cloudflare Pages builds use the
+commit identified by `CF_PAGES_COMMIT_SHA`; local builds use the current Git
+HEAD. The generated TypeScript file is ignored and must not be edited or
+committed.
 
 Use Cloudflare Pages preview deployments for non-production branches. Do not
 commit generated `dist/` files or deployment credentials.

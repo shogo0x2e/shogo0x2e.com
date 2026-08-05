@@ -77,7 +77,7 @@ and must not be committed.
 
 - The root page detects the browser's preferred language: Japanese visitors are
   sent to `/ja/`; all other visitors remain on English.
-- A manual EN/JA selection is saved in local storage and overrides automatic
+- A manual EN/JA selection is saved in session storage and overrides automatic
   detection.
 - Do not force redirects on deep links or explicit locale URLs.
 - Keep canonical and `hreflang` links correct when adding routes.
@@ -99,8 +99,17 @@ and must not be committed.
 - The site is intended for Cloudflare Pages as a static Astro build.
 - Build command: `npm run build`
 - Output directory: `dist`
-- Cloudflare Pages is connected directly to GitHub; pushes to `main` deploy to
+- Cloudflare Pages is connected directly to GitHub; pushes to `production` deploy to
   production and other branches may receive preview deployments.
+- `predev` and `prebuild` generate `src/generated/buildMetadata.ts`. Do not edit
+  or commit this ignored file.
+- The footer's `Last updated` value is the deployed commit timestamp. On Pages,
+  the generator pins it with `CF_PAGES_COMMIT_SHA`; locally it uses Git HEAD and
+  falls back to build time only when Git metadata is unavailable.
+- Cloudflare build and deployment troubleshooting should start with read-only
+  inspection through the Builds or Observability MCP server, or the Pages
+  deployment logs in the dashboard. A static build does not require runtime
+  application logs.
 - Google Analytics is enabled only in production when
   `PUBLIC_GA_MEASUREMENT_ID` contains a valid `G-...` value.
 - Never hard-code deployment-specific environment values into source files.

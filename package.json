@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate:metadata": "node scripts/generate-build-metadata.mjs",
+    "predev": "npm run generate:metadata",
     "dev": "astro dev --host 127.0.0.1",
+    "prebuild": "npm run generate:metadata",
     "build": "astro build",
     "preview": "astro preview",
     "test:locale": "npm run build && node scripts/check-locale-redirect.mjs"

@@ -1,14 +1,19 @@
 ---
+import { buildMetadata } from "../generated/buildMetadata";
+
 interface Props {
   compact?: boolean;
   locale?: "en" | "ja";
 }
 const { compact = false, locale = "en" } = Astro.props;
+const lastUpdated = new Date(buildMetadata.lastUpdated);
+const lastUpdatedIso = lastUpdated.toISOString();
+const lastUpdatedLabel = `${lastUpdatedIso.slice(0, 16)}Z`;
 ---
 
 <footer class="site-footer shell">
   <p>© 2026 Shogo Kitada</p>
-  <p><time datetime="2026-08-03T02:41:00Z">Last updated 2026-08-03T02:41Z</time></p>
+  <p><time datetime={lastUpdatedIso}>Last updated {lastUpdatedLabel}</time></p>
   {
     !compact && (
       <nav aria-label={locale === "ja" ? "外部リンク" : "Social links"}>
