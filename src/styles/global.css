@@ -543,6 +543,7 @@ button:focus-visible {
 .writing-list li {
   display: grid;
   grid-template-columns: 92px 1fr;
+  align-items: baseline;
   gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
