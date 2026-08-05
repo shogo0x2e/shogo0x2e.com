@@ -1,7 +1,7 @@
 ---
 slug: unity-library
 locale: en
-title: Unity as a Library
+title: Unity as a Library with Expo Modules
 description: Embedding Unity as a runtime library in native applications and designing a maintainable build workflow.
 date: 2025-12-14
 type: Article
