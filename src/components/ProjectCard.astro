@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ResponsiveImage from "./ResponsiveImage.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -13,6 +14,9 @@ const tagIndex = tags.map((tag) => tag.toLowerCase().replaceAll(" ", "-")).join(
 const prefix = locale === "ja" ? "/ja" : "";
 const projectHref = `${prefix}/work/${project.data.slug}/`;
 const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
+const cardSizes = archive
+  ? "(min-width: 1121px) 30vw, (min-width: 800px) 48vw, 90vw"
+  : "(min-width: 800px) 30vw, 90vw";
 ---
 
 <article
@@ -24,7 +28,7 @@ const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
 >
   {hero && (
     <a class="project-image-link" href={projectHref} aria-label={locale === "ja" ? `${title}を見る` : `View ${title}`}>
-      <img src={hero} alt="" width="720" height="360" />
+      <ResponsiveImage src={hero} alt="" width={720} height={360} sizes={cardSizes} />
     </a>
   )}
   <div class={archive ? "archive-card-body" : "project-body"}>

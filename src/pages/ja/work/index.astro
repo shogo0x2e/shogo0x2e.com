@@ -20,7 +20,7 @@ const filters = [{ label: "すべて", value: "all" }, { label: "Project", value
         <p class="result-count" aria-live="polite" data-result-count>{work.length}件</p>
       </div>
     </section>
-    <section class="archive-grid" aria-label="Work一覧" data-work-grid>{work.map((entry) => <WorkCard work={entry} locale={locale} />)}</section>
+    <section class="archive-grid" aria-label="Work一覧" data-work-grid>{work.map((entry, index) => <WorkCard work={entry} locale={locale} loading={index === 0 ? "eager" : "lazy"} />)}</section>
     <p class="empty-state" hidden data-empty-state>条件に一致するWorkがありません．</p>
   </main>
 </BaseLayout>

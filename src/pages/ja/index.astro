@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import WorkCard from "../../components/WorkCard.astro";
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import SocialLinks from "../../components/SocialLinks.astro";
 import { currentWork } from "../../data/currentWork";
 
@@ -56,7 +57,15 @@ const structuredData = {
         <SocialLinks locale={locale} />
       </div>
       <figure class="hero-figure">
-        <img src="/images/hero-google-japan.webp" alt="Google Japanで撮影した北田章伍" width="1200" height="1200" />
+        <ResponsiveImage
+          src="/images/hero-google-japan.webp"
+          alt="Google Japanで撮影した北田章伍"
+          width={1200}
+          height={1200}
+          sizes="(min-width: 1121px) 600px, 90vw"
+          loading="eager"
+          fetchpriority="high"
+        />
       </figure>
     </section>
 
@@ -71,10 +80,10 @@ const structuredData = {
             <a href={currentWork.paperUrl}>論文を読む <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-        <div class="current-gallery" aria-label="Robotic Telepresenceのプロジェクト画像">
-          <img src={currentWork.images[0]} alt="モジュラーロボットへ投影された遠隔話者と対面する実験参加者" width="288" height="180" />
-          <img src={currentWork.images[1]} alt="遠隔話者の身体を表現する二つの投影配置の比較" width="308" height="180" />
-          <img src={currentWork.images[2]} alt="ロボット，カメラ，プロジェクター，反射床からなるRobotic Telepresenceのシステム構成" width="290" height="180" />
+        <div class="current-gallery" role="group" aria-label="Robotic Telepresenceのプロジェクト画像">
+          <ResponsiveImage src={currentWork.images[0]} alt="モジュラーロボットへ投影された遠隔話者と対面する実験参加者" width={288} height={180} sizes="(min-width: 1121px) 20vw, (min-width: 521px) 45vw, 90vw" />
+          <ResponsiveImage src={currentWork.images[1]} alt="遠隔話者の身体を表現する二つの投影配置の比較" width={308} height={180} sizes="(min-width: 1121px) 20vw, (min-width: 521px) 45vw, 90vw" />
+          <ResponsiveImage src={currentWork.images[2]} alt="ロボット，カメラ，プロジェクター，反射床からなるRobotic Telepresenceのシステム構成" width={290} height={180} sizes="(min-width: 1121px) 20vw, (min-width: 521px) 45vw, 90vw" />
         </div>
       </section>
 
@@ -86,7 +95,7 @@ const structuredData = {
         </div>
         <div class="project-grid">
           {projects.filter(({ data }) => data.slug !== currentWork.slug).slice(0, 3).map((project) => (
-            <WorkCard work={project} locale={locale} showType={false} showDate={false} />
+            <WorkCard work={project} locale={locale} showType={false} showDate={false} sizes="(min-width: 800px) 30vw, 90vw" />
           ))}
         </div>
       </section>

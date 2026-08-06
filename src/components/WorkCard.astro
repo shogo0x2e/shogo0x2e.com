@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ResponsiveImage from "./ResponsiveImage.astro";
 
 type WorkEntry = CollectionEntry<"projects"> | CollectionEntry<"writing">;
 
@@ -8,9 +9,11 @@ interface Props {
   locale?: "en" | "ja";
   showType?: boolean;
   showDate?: boolean;
+  sizes?: string;
+  loading?: "eager" | "lazy";
 }
 
-const { work, locale = "en", showType = true, showDate = true } = Astro.props;
+const { work, locale = "en", showType = true, showDate = true, sizes, loading = "lazy" } = Astro.props;
 const { title, description, date, tags, keywords } = work.data;
 const prefix = locale === "ja" ? "/ja" : "";
 const isProjectEntry = work.collection === "projects";
@@ -20,6 +23,7 @@ const href = isProjectEntry
   ? `${prefix}/work/${work.data.slug}/`
   : work.data.externalUrl ?? `${prefix}/work/${work.data.slug}/`;
 const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
+const cardSizes = sizes ?? "(min-width: 1121px) 30vw, (min-width: 800px) 48vw, 90vw";
 ---
 
 <article
@@ -31,7 +35,7 @@ const displayDate = date.toISOString().slice(0, 7).replace("-", ".");
 >
   {hero ? (
     <a class="project-image-link" href={href} aria-label={locale === "ja" ? `${title}を見る` : `View ${title}`}>
-      <img src={hero} alt="" width="720" height="360" />
+      <ResponsiveImage src={hero} alt="" width={720} height={360} sizes={cardSizes} loading={loading} />
     </a>
   ) : (
     <div class="work-card-placeholder" aria-hidden="true"><span>{tags[0]}</span></div>

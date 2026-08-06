@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects", ({ data }) => !data.draft && data.locale === "en");
@@ -19,7 +20,7 @@ const hasLinks = work.data.repositoryUrl || work.data.paperUrl || work.data.sour
       <p class="eyebrow">{work.data.date.toISOString().slice(0, 7).replace("-", ".")} · {work.data.tags[0]}</p>
       <h1>{work.data.title}</h1><p>{work.data.description}</p>
     </header>
-    {work.data.hero && <img class="detail-hero" src={work.data.hero} alt="" width="1400" height="700" />}
+    {work.data.hero && <ResponsiveImage class="detail-hero" src={work.data.hero} alt="" width={1400} height={700} sizes="100vw" loading="eager" />}
     <div class="detail-grid">
       <aside>
         <dl class="detail-meta">{work.data.role && <div><dt>Keyword:</dt><dd>{work.data.role}</dd></div>}<div><dt>Year</dt><dd>{work.data.year}</dd></div></dl>

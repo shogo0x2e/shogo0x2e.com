@@ -5,15 +5,22 @@
   "private": true,
   "scripts": {
     "generate:metadata": "node scripts/generate-build-metadata.mjs",
-    "predev": "npm run generate:metadata",
+    "generate:images": "node scripts/generate-responsive-images.mjs",
+    "predev": "npm run generate:metadata && npm run generate:images",
     "dev": "astro dev --host 127.0.0.1",
-    "prebuild": "npm run generate:metadata",
+    "prebuild": "npm run generate:metadata && npm run generate:images",
     "build": "astro build",
     "preview": "astro preview",
+    "lighthouse": "npm run build && lhci autorun",
+    "lighthouse:summary": "node scripts/lighthouse-summary.mjs",
     "test:locale": "npm run build && node scripts/check-locale-redirect.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.0.0"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.15.1",
+    "sharp": "^0.35.3"
   }
 }

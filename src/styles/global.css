@@ -402,13 +402,17 @@ button:focus-visible {
   gap: 6px;
 }
 
+.current-gallery > picture {
+  min-width: 0;
+}
+
 .current-gallery img {
   width: 100%;
   height: clamp(150px, 12vw, 190px);
   object-fit: cover;
 }
 
-.current-gallery img:nth-child(n + 2) {
+.current-gallery > picture:nth-child(n + 2) img {
   background: white;
   object-fit: contain;
 }
@@ -1391,7 +1395,7 @@ button:focus-visible {
     height: 180px;
   }
 
-  .current-gallery img:last-child {
+  .current-gallery > picture:last-child {
     display: none;
   }
 
@@ -1479,7 +1483,7 @@ button:focus-visible {
     height: 220px;
   }
 
-  .current-gallery img:nth-child(2) {
+  .current-gallery > picture:nth-child(2) {
     display: none;
   }
 

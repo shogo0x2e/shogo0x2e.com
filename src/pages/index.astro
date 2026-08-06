@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
 import SocialLinks from "../components/SocialLinks.astro";
 import { currentWork } from "../data/currentWork";
 
@@ -61,11 +62,14 @@ const structuredData = {
         <SocialLinks locale={locale} />
       </div>
       <figure class="hero-figure">
-        <img
+        <ResponsiveImage
           src="/images/hero-google-japan.webp"
           alt="Shogo Kitada at Google Japan"
-          width="1200"
-          height="1200"
+          width={1200}
+          height={1200}
+          sizes="(min-width: 1121px) 600px, 90vw"
+          loading="eager"
+          fetchpriority="high"
         />
       </figure>
     </section>
@@ -81,10 +85,10 @@ const structuredData = {
               <a href={currentWork.paperUrl}>Read paper <span aria-hidden="true">↗</span></a>
             </div>
           </div>
-          <div class="current-gallery" aria-label="Robotic Telepresence project images">
-            <img src={currentWork.images[0]} alt="A participant interacting with a projected remote speaker across modular robot bodies" width="288" height="180" />
-            <img src={currentWork.images[1]} alt="Comparison of two projection arrangements for representing a remote speaker's body" width="308" height="180" />
-            <img src={currentWork.images[2]} alt="Robotic Telepresence system configuration with robots, cameras, projector, and reflective floor" width="290" height="180" />
+          <div class="current-gallery" role="group" aria-label="Robotic Telepresence project images">
+            <ResponsiveImage src={currentWork.images[0]} alt="A participant interacting with a projected remote speaker across modular robot bodies" width={288} height={180} sizes="(min-width: 1121px) 20vw, (min-width: 521px) 45vw, 90vw" />
+            <ResponsiveImage src={currentWork.images[1]} alt="Comparison of two projection arrangements for representing a remote speaker's body" width={308} height={180} sizes="(min-width: 1121px) 20vw, (min-width: 521px) 45vw, 90vw" />
+            <ResponsiveImage src={currentWork.images[2]} alt="Robotic Telepresence system configuration with robots, cameras, projector, and reflective floor" width={290} height={180} sizes="(min-width: 1121px) 20vw, (min-width: 521px) 45vw, 90vw" />
           </div>
     </section>
 
@@ -96,7 +100,7 @@ const structuredData = {
         </div>
         <div class="project-grid">
           {projects.filter(({ data }) => data.slug !== currentWork.slug).slice(0, 3).map((project) => (
-            <WorkCard work={project} locale={locale} showType={false} showDate={false} />
+            <WorkCard work={project} locale={locale} showType={false} showDate={false} sizes="(min-width: 800px) 30vw, 90vw" />
           ))}
         </div>
       </section>

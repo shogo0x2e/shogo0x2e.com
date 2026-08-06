@@ -31,7 +31,7 @@ const filters = ["All", "Project", "Writing"];
       </div>
     </section>
     <section class="archive-grid" aria-label="Work results" data-work-grid>
-      {work.map((entry) => <WorkCard work={entry} locale={locale} />)}
+      {work.map((entry, index) => <WorkCard work={entry} locale={locale} loading={index === 0 ? "eager" : "lazy"} />)}
     </section>
     <p class="empty-state" hidden data-empty-state>No work matches this search.</p>
   </main>

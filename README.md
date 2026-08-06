@@ -27,6 +27,31 @@ make build
 make preview
 ```
 
+## Local performance evaluation
+
+```bash
+npm run lighthouse
+# or: make lighthouse
+```
+
+`npm run lighthouse` builds the production site, serves `dist/` with
+`astro preview`, and runs Lighthouse CI (mobile conditions) three times each on
+`/`, `/ja/`, `/work/`, and `/ja/work/`. Reports are written to `.lighthouseci/`
+(git-ignored) together with a machine-readable summary:
+
+```bash
+npm run lighthouse:summary
+```
+
+Baseline runs are kept in `.lighthouseci/baseline/`. Thresholds and evaluated
+URLs live in `.lighthouserc.cjs`; the approach is documented in
+`docs/adr/0001-local-lighthouse-and-image-performance.md`.
+
+`npm run generate:images` derives responsive WebP versions of every image in
+`public/images/` into `public/images/responsive/` (part of `predev` and
+`prebuild`). The pages serve them through `src/components/ResponsiveImage.astro`
+with `srcset`/`sizes`; the originals remain the fallback and are never replaced.
+
 ## Content
 
 - Projects: `src/content/projects/<slug>/en.md` and `ja.md`

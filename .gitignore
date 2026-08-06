@@ -1,7 +1,9 @@
 node_modules/
 dist/
 .astro/
+.lighthouseci/
 src/generated/buildMetadata.ts
+src/generated/responsiveImages.ts
 .DS_Store
 .env
 .env.*
