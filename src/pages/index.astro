@@ -22,9 +22,34 @@ const formatDate = (date: Date) =>
     month: "2-digit",
     day: "2-digit",
   }).format(date).replaceAll("-", ".");
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: "https://shogo0x2e.com/",
+  mainEntity: {
+    "@type": "Person",
+    "@id": "https://shogo0x2e.com/#person",
+    name: "Shogo Kitada",
+    alternateName: ["北田 章伍", "Shogo Kitada", "Kitapi", "きたぴー", "shogo0x2e"],
+    url: "https://shogo0x2e.com/",
+    sameAs: [
+      "https://github.com/shogo0x2e",
+      "https://zenn.dev/shogo0x2e",
+      "https://qiita.com/shogo0x2e",
+      "https://x.com/shogo0x2e",
+      "https://www.linkedin.com/in/shogo-kitada-a79683303/",
+      "https://www.facebook.com/shogo0x2e/?locale=ja_JP",
+    ],
+  },
+};
 ---
 
-<BaseLayout current="about">
+<BaseLayout
+  current="about"
+  title="Shogo Kitada (Kitapi) — shogo0x2e"
+  description="Shogo Kitada (Kitapi)'s personal technical portfolio."
+  structuredData={structuredData}
+>
   <main id="main">
     <section class="hero shell section-anchor" id="now" aria-labelledby="hero-title">
       <div class="hero-copy">

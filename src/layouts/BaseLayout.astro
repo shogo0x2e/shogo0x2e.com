@@ -10,6 +10,7 @@ interface Props {
   bodyClass?: string;
   compactFooter?: boolean;
   locale?: "en" | "ja";
+  structuredData?: object | object[];
 }
 
 const {
@@ -19,7 +20,14 @@ const {
   bodyClass,
   compactFooter = false,
   locale = "en",
+  structuredData,
 } = Astro.props;
+
+const structuredDataItems = structuredData === undefined
+  ? []
+  : Array.isArray(structuredData)
+    ? structuredData
+    : [structuredData];
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL("/og-image.png", Astro.site);
@@ -61,6 +69,11 @@ const analyticsEnabled = import.meta.env.PROD && /^G-[A-Z0-9]+$/.test(gaMeasurem
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <title>{title}</title>
+    {
+      structuredDataItems.map((data) => (
+        <script type="application/ld+json" set:html={JSON.stringify(data)} />
+      ))
+    }
     {
       analyticsEnabled && (
         <>

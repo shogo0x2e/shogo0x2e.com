@@ -16,13 +16,34 @@ const workHref = (entry: (typeof writing)[number]) => entry.collection === "writ
   ? entry.data.externalUrl
   : `/ja/work/${entry.data.slug}/`;
 const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll("-", ".");
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: "https://shogo0x2e.com/ja/",
+  mainEntity: {
+    "@type": "Person",
+    "@id": "https://shogo0x2e.com/#person",
+    name: "北田 章伍",
+    alternateName: ["北田 章伍", "Shogo Kitada", "Kitapi", "きたぴー", "shogo0x2e"],
+    url: "https://shogo0x2e.com/",
+    sameAs: [
+      "https://github.com/shogo0x2e",
+      "https://zenn.dev/shogo0x2e",
+      "https://qiita.com/shogo0x2e",
+      "https://x.com/shogo0x2e",
+      "https://www.linkedin.com/in/shogo-kitada-a79683303/",
+      "https://www.facebook.com/shogo0x2e/?locale=ja_JP",
+    ],
+  },
+};
 ---
 
 <BaseLayout
   locale={locale}
   current="about"
-  title="shogo0x2e — 北田 章伍"
-  description="北田章伍の技術ポートフォリオ．"
+  title="北田 章伍（Kitapi / きたぴー）— shogo0x2e"
+  description="北田章伍（Kitapi / きたぴー）の技術ポートフォリオ．"
+  structuredData={structuredData}
 >
   <main id="main">
     <section class="hero shell section-anchor" id="now" aria-labelledby="hero-title">

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shogo0x2e.com/sitemap-index.xml
